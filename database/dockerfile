@@ -1,0 +1,20 @@
+FROM mysql:latest
+
+# Set environment variables
+ENV MYSQL_ROOT_PASSWORD=gt,W34dG1*f?DFMsiU2
+ENV MYSQL_DATABASE=sticky_notes_db
+ENV MYSQL_USER=notes_admin
+ENV MYSQL_PASSWORD=lJ8BCUG9f87kAwO
+
+# Copy SQL script for user creation and privilege granting
+COPY init.sql /docker-entrypoint-initdb.d/
+
+# Expose the MySQL port
+EXPOSE 3306
+
+VOLUME mysql_data:/var/lib/mysql
+
+# Entrypoint script to handle additional setup
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
